@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -18,9 +18,15 @@ export class AppController {
 
   //This is the way to create a endpoint getting params from the url
   @Get('products/:id')
-  //<functionName>(@Param(<paramAlias>) <paramName>: <typeOfParam>)
+  //<functionName>(@Param(<paramName>) <paramName>: <typeOfParam>)
   getProduct(@Param('id') id: any) {
     return `Product: ${id}`;
+  }
+
+  @Get('products')
+  //<functionName>(@Query(<paramName>) <paramName>: <typeOfParam>)
+  getProducts(@Query('limit') limit: number, @Query('offset') offset: number) {
+    return `Products: limit:${limit} and offset:${offset}`;
   }
 
   //This is the way to get many params from the url
