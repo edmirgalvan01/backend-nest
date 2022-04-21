@@ -25,8 +25,13 @@ export class AppController {
 
   @Get('products')
   //<functionName>(@Query(<paramName>) <paramName>: <typeOfParam>)
-  getProducts(@Query('limit') limit: number, @Query('offset') offset: number) {
-    return `Products: limit:${limit} and offset:${offset}`;
+  getProducts(
+    //we can define default params
+    @Query('limit') limit = 100,
+    @Query('offset') offset: number,
+    @Query('brand') brand: string,
+  ) {
+    return `Products: limit:${limit}, offset:${offset} and brand ${brand}`;
   }
 
   //This is the way to get many params from the url
