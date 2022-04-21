@@ -1,45 +1,13 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getHello(): string {
-    return 'Hola mundo!';
-  }
-
   //This is the way to create a endpoint in Nest
   @Get('new')
   newEndpoint() {
     return 'Este es un nuevo endpoint';
-  }
-
-  //This is the way to create a endpoint getting params from the url
-  @Get('products/:id')
-  //<functionName>(@Param(<paramName>) <paramName>: <typeOfParam>)
-  getProduct(@Param('id') id: any) {
-    return `Product: ${id}`;
-  }
-
-  @Get('products')
-  //<functionName>(@Query(<paramName>) <paramName>: <typeOfParam>)
-  getProducts(
-    //we can define default params
-    @Query('limit') limit = 100,
-    @Query('offset') offset: number,
-    @Query('brand') brand: string,
-  ) {
-    return `Products: limit:${limit}, offset:${offset} and brand ${brand}`;
-  }
-
-  //This is the way to get many params from the url
-  @Get('categories/:categoryId/products/:productId')
-  getCategory(
-    @Param('categoryId') categoryId: any,
-    @Param('productId') productId: any,
-  ) {
-    return `Category: ${categoryId} and Product: ${productId}`;
   }
 }
