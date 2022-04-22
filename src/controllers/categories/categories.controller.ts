@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query, Post, Body } from '@nestjs/common';
 
 //Any method will have this path (categories), so it is not necessary to put it in the method
 @Controller('categories')
@@ -14,6 +14,16 @@ export class CategoriesController {
   getCategory(@Param('id') id: any) {
     return {
       message: `Category id: ${id}`,
+    };
+  }
+
+  //Create a new categorie
+  @Post()
+  //payload is the information that the user sends through the method POST
+  create(@Body() payload: any) {
+    return {
+      message: 'Accion de crear',
+      payload,
     };
   }
 }

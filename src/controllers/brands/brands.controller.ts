@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Param } from '@nestjs/common';
+import { Controller, Get, Query, Param, Post, Body } from '@nestjs/common';
 
 @Controller('brands')
 export class BrandsController {
@@ -13,6 +13,16 @@ export class BrandsController {
   getBrand(@Param('id') id: any) {
     return {
       message: `Brand  id: ${id}`,
+    };
+  }
+
+  //Create a new brand
+  @Post()
+  //payload is the information that the user sends through the method POST
+  create(@Body() payload: any) {
+    return {
+      message: 'Accion de crear',
+      payload,
     };
   }
 }
