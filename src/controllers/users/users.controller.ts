@@ -4,11 +4,15 @@ import { Controller, Get, Query, Param } from '@nestjs/common';
 export class UsersController {
   @Get('')
   getUsers(@Query('limit') limit = 30, @Query('offset') offset: number) {
-    return `Users: ${limit} - ${offset}`;
+    return {
+      message: `Users: ${limit} - ${offset}`,
+    };
   }
 
   @Get(':id')
   getUser(@Param('id') id: any) {
-    return `User id: ${id}`;
+    return {
+      message: `User id: ${id}`,
+    };
   }
 }

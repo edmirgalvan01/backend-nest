@@ -5,11 +5,15 @@ import { Controller, Get, Param, Query } from '@nestjs/common';
 export class CategoriesController {
   @Get('')
   getCategories(@Query('limit') limit = 30, @Query('offset') offset: number) {
-    return `Categories: ${limit} - ${offset}`;
+    return {
+      message: `Categories: ${limit} - ${offset}`,
+    };
   }
 
   @Get(':id')
   getCategory(@Param('id') id: any) {
-    return `Category id: ${id}`;
+    return {
+      message: `Category id: ${id}`,
+    };
   }
 }

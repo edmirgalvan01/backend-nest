@@ -4,11 +4,15 @@ import { Controller, Get, Query, Param } from '@nestjs/common';
 export class BrandsController {
   @Get('')
   getBrands(@Query('limit') limit = 30, @Query('offset') offset: number) {
-    return `Brands: ${limit} - ${offset}`;
+    return {
+      message: `Brands: ${limit} - ${offset}`,
+    };
   }
 
   @Get(':id')
   getBrand(@Param('id') id: any) {
-    return `Brand  id: ${id}`;
+    return {
+      message: `Brand  id: ${id}`,
+    };
   }
 }

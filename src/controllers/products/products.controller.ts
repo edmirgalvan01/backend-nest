@@ -9,16 +9,19 @@ export class ProductsController {
     //we can define default params
     @Query('limit') limit = 100,
     @Query('offset') offset: number,
-    @Query('brand') brand: string,
   ) {
-    return `Products: limit:${limit}, offset:${offset} and brand ${brand}`;
+    return {
+      message: `Products: limit:${limit} and offset:${offset}`,
+    };
   }
 
   //This is the way to create a endpoint getting params from the url
   @Get(':id')
   //<functionName>(@Param(<paramName>) <paramName>: <typeOfParam>)
   getOne(@Param('id') id: any) {
-    return `Product: ${id}`;
+    return {
+      message: `Product: ${id}`,
+    };
   }
 
   //Create a new product
