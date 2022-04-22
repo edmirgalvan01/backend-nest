@@ -9,6 +9,6 @@ export class BrandsController {
 
   @Get(':id')
   getBrand(@Param('id') id: any) {
-    return `Brand id: ${id}`;
+    return `Brand  id: ${id}`;
   }
 }
