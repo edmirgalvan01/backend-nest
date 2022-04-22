@@ -1,14 +1,15 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 
 //Any method will have this path (categories), so it is not necessary to put it in the method
 @Controller('categories')
 export class CategoriesController {
-  //This is the way to get many params from the url
-  @Get(':categoryId/products/:productId')
-  getCategory(
-    @Param('categoryId') categoryId: any,
-    @Param('productId') productId: any,
-  ) {
-    return `Category: ${categoryId} and Product: ${productId}`;
+  @Get('')
+  getCategories(@Query('limit') limit = 30, @Query('offset') offset: number) {
+    return `Categories: ${limit} - ${offset}`;
+  }
+
+  @Get(':id')
+  getCategory(@Param('id') id: any) {
+    return `Category id: ${id}`;
   }
 }
