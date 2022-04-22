@@ -1,4 +1,13 @@
-import { Controller, Get, Param, Query, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Query,
+  Post,
+  Body,
+  Put,
+  Delete,
+} from '@nestjs/common';
 
 //Any method will have this path (products), so it is not necessary to put it in the method
 @Controller('products')
@@ -31,6 +40,24 @@ export class ProductsController {
     return {
       message: 'Accion de crear',
       payload,
+    };
+  }
+
+  //Edit a product through your id
+  @Put(':id')
+  //We will receive new product data through the body.
+  update(@Param('id') id: number, @Body() payload: any) {
+    return {
+      id,
+      payload,
+    };
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: number) {
+    return {
+      message: 'Accion de eliminar',
+      id,
     };
   }
 }
