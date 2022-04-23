@@ -18,14 +18,6 @@ export class ProductsService {
       stock: 10,
       img: 'https://unsplash.com/photos/sc5sTPMrVfk',
     },
-    {
-      id: 2,
-      name: 'Hot dog',
-      price: 20,
-      description: 'Una hot dog muy sabroso',
-      stock: 10,
-      img: 'https://unsplash.com/photos/vv9zRS6Jg_s',
-    },
   ];
 
   findAll() {

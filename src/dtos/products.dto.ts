@@ -6,6 +6,7 @@ import {
   IsPositive,
 } from 'class-validator';
 
+//this is responsible for making optional variables
 import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateProductDto {
