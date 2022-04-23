@@ -1,9 +1,24 @@
+import { IsString, IsNumber, IsUrl, IsNotEmpty } from 'class-validator';
+
 export class CreateProductDto {
-  //This variable won't be manipulated, only will be used for reading
+  @IsString()
+  @IsNotEmpty()
   readonly name: string;
+
+  @IsNumber()
+  @IsNotEmpty()
   readonly price: number;
+
+  @IsString()
+  @IsNotEmpty()
   readonly description: string;
+
+  @IsNumber()
+  @IsNotEmpty()
   readonly stock: number;
+
+  @IsUrl()
+  @IsNotEmpty()
   readonly img: string;
 }
 
