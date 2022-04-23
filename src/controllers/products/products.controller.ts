@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 
 import { ParseIntPipe } from '../../common/parse-int.pipe';
-import { CreateProductDto } from '../../dtos/products.dto';
+import { CreateProductDto, UpdateProductDto } from '../../dtos/products.dto';
 import { ProductsService } from '../../services/products/products.service';
 
 //import { Response } from 'express';
@@ -44,7 +44,10 @@ export class ProductsController {
   //Edit a product through your id
   @Put(':id')
   //We will receive new product data through the body.
-  update(@Param('id', ParseIntPipe) id: number, @Body() payload: any) {
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() payload: UpdateProductDto,
+  ) {
     return this.productsService.update(id, payload);
   }
 

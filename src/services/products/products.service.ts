@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateProductDto } from '../../dtos/products.dto';
+import { CreateProductDto, UpdateProductDto } from '../../dtos/products.dto';
 import { Product } from '../../entities/product.entity';
 
 @Injectable()
@@ -58,7 +58,7 @@ export class ProductsService {
     return newProduct;
   }
 
-  update(id: number, payload: any) {
+  update(id: number, payload: UpdateProductDto) {
     //We reuse the existing code to find the product through its id
     const product = this.findOne(id);
     if (product) {

@@ -6,3 +6,12 @@ export class CreateProductDto {
   readonly stock: number;
   readonly img: string;
 }
+
+export class UpdateProductDto {
+  //"?" it's responsible for declaring the variable as optional
+  readonly name?: string;
+  readonly price?: number;
+  readonly description?: string;
+  readonly stock?: number;
+  readonly img?: string;
+}
