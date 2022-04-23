@@ -9,8 +9,10 @@ import {
   Delete,
   HttpStatus,
   HttpCode,
-  ParseIntPipe,
+  //ParseIntPipe,
 } from '@nestjs/common';
+
+import { ParseIntPipe } from '../../common/parse-int.pipe';
 
 import { ProductsService } from '../../services/products/products.service';
 
@@ -21,12 +23,7 @@ import { ProductsService } from '../../services/products/products.service';
 export class ProductsController {
   constructor(private productsService: ProductsService) {}
   @Get('')
-  //<functionName>(@Query(<paramName>) <paramName>: <typeOfParam>)
-  getAll(
-    //we can define default params
-    @Query('limit') limit = 100,
-    @Query('offset') offset: number,
-  ) {
+  getAll() {
     return this.productsService.findAll();
   }
 
@@ -34,7 +31,6 @@ export class ProductsController {
   @Get(':id')
   //This is the way to create a status code for the request
   @HttpCode(HttpStatus.ACCEPTED)
-  //ParseIntPipe allows us to parse the id to integer
   getOne(@Param('id', ParseIntPipe) id: number) {
     return this.productsService.findOne(id);
   }
