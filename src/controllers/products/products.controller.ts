@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 
 import { ParseIntPipe } from '../../common/parse-int.pipe';
-
+import { CreateProductDto } from '../../dtos/products.dto';
 import { ProductsService } from '../../services/products/products.service';
 
 //import { Response } from 'express';
@@ -37,7 +37,7 @@ export class ProductsController {
   //Create a new product
   @Post()
   //payload is the information that the user sends through the method POST
-  create(@Body() payload: any) {
+  create(@Body() payload: CreateProductDto) {
     return this.productsService.create(payload);
   }
 
