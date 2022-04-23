@@ -42,6 +42,7 @@ export class ProductsService {
   }
 
   create(payload: CreateProductDto) {
+    console.log(payload);
     //We increment the counter id
     this.counterId = this.counterId + 1;
 
