@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { Product } from '../../entities/product.entity';
 
@@ -12,11 +12,19 @@ export class ProductsService {
   private products: Product[] = [
     {
       id: 1,
-      name: 'Hamburguesas',
+      name: 'Hamburguesa',
       price: 35,
       description: 'Una hamburguesa muy sabrosa',
       stock: 10,
       img: 'https://unsplash.com/photos/sc5sTPMrVfk',
+    },
+    {
+      id: 2,
+      name: 'Hot dog',
+      price: 20,
+      description: 'Una hot dog muy sabroso',
+      stock: 10,
+      img: 'https://unsplash.com/photos/vv9zRS6Jg_s',
     },
   ];
 
@@ -25,7 +33,12 @@ export class ProductsService {
   }
 
   findOne(id: number) {
-    return this.products.find((item) => item.id === id);
+    const product = this.products.find((item) => item.id === id);
+    //We use error first
+    if (!product) {
+      throw new NotFoundException(`Product #${id} not found`);
+    }
+    return product;
   }
 
   create(payload: any) {
@@ -45,16 +58,33 @@ export class ProductsService {
     return newProduct;
   }
 
-  edit(id: number, payload: any) {
-    const productEdit = this.products.findIndex((p) => p.id === id);
-    this.products[productEdit] = {
-      id: id,
-      ...payload,
-    };
+  update(id: number, payload: any) {
+    //We reuse the existing code to find the product through its id
+    const product = this.findOne(id);
+    if (product) {
+      //We find product index
+      const indexProduct = this.products.findIndex((p) => p.id === id);
+      //We merge the old product and the new product
+      this.products[indexProduct] = {
+        ...product,
+        ...payload,
+      };
+
+      return this.products[indexProduct];
+    } else {
+      return null;
+    }
   }
 
   delete(id: number) {
-    const productDelete = this.products.findIndex((p) => p.id === id);
-    this.products.splice(productDelete, 1);
+    const product = this.findOne(id);
+    if (product) {
+      const indexProduct = this.products.findIndex((p) => p.id === id);
+      this.products.splice(indexProduct, 1);
+
+      return { message: true };
+    } else {
+      return { message: false };
+    }
   }
 }

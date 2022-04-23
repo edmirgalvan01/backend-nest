@@ -9,14 +9,18 @@ import {
   Delete,
   HttpStatus,
   HttpCode,
+  ParseIntPipe,
   //Res,
 } from '@nestjs/common';
+
+import { ProductsService } from '../../services/products/products.service';
 
 //import { Response } from 'express';
 
 //Any method will have this path (products), so it is not necessary to put it in the method
 @Controller('products')
 export class ProductsController {
+  constructor(private productsService: ProductsService) {}
   @Get('')
   //<functionName>(@Query(<paramName>) <paramName>: <typeOfParam>)
   getAll(
@@ -24,9 +28,7 @@ export class ProductsController {
     @Query('limit') limit = 100,
     @Query('offset') offset: number,
   ) {
-    return {
-      message: `Products: limit:${limit} and offset:${offset}`,
-    };
+    return this.productsService.findAll();
   }
 
   //This is the way to create a endpoint getting params from the url
@@ -34,46 +36,27 @@ export class ProductsController {
   //This is the way to create a status code for the request
   @HttpCode(HttpStatus.ACCEPTED)
   //<functionName>(@Param(<paramName>) <paramName>: <typeOfParam>)
-  getOne(@Param('id') id: any) {
-    return {
-      message: `Product: ${id}`,
-    };
+  //ParseIntPipe allows us to parse the id to integer
+  getOne(@Param('id', ParseIntPipe) id: number) {
+    return this.productsService.findOne(id);
   }
-
-  //This is the way express wants to respond to your request
-  // @Get(':id')
-  // @HttpCode(HttpStatus.ACCEPTED)
-  // getOneExpress(@Res() response: Response, @Param('id') id: any) {
-  //   response.status(200).send({
-  //     message: `Product: ${id}`,
-  //   });
-  // }
 
   //Create a new product
   @Post()
   //payload is the information that the user sends through the method POST
   create(@Body() payload: any) {
-    return {
-      message: 'Accion de crear',
-      payload,
-    };
+    return this.productsService.create(payload);
   }
 
   //Edit a product through your id
   @Put(':id')
   //We will receive new product data through the body.
-  update(@Param('id') id: number, @Body() payload: any) {
-    return {
-      id,
-      payload,
-    };
+  update(@Param('id', ParseIntPipe) id: number, @Body() payload: any) {
+    return this.productsService.update(id, payload);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: number) {
-    return {
-      message: 'Accion de eliminar',
-      id,
-    };
+  delete(@Param('id', ParseIntPipe) id: number) {
+    return this.productsService.delete(id);
   }
 }
