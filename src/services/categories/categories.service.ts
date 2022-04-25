@@ -1,4 +1,71 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Categorie } from '../../entities/categorie.entity';
 
 @Injectable()
-export class CategoriesService {}
+export class CategoriesService {
+  private counterId = 1;
+
+  private categories: Categorie[] = [
+    {
+      id: 1,
+      name: 'Tecnologia',
+    },
+  ];
+
+  findAll() {
+    return this.categories;
+  }
+
+  findOne(id: number) {
+    const categorie = this.categories.find((c) => c.id === id);
+
+    if (!categorie) {
+      throw new NotFoundException(`Categorie #${id} not found`);
+    }
+
+    return categorie;
+  }
+
+  //TODO: Create brand dto
+  create(payload: any) {
+    this.counterId = this.counterId + 1;
+
+    const newCategorie = {
+      id: this.counterId,
+      ...payload,
+    };
+
+    this.categories.push(newCategorie);
+
+    return newCategorie;
+  }
+
+  //TODO: Create brand dto
+  update(id: number, payload: any) {
+    const categorie = this.findOne(id);
+
+    if (categorie) {
+      const indexCategorie = this.categories.findIndex((c) => c.id === id);
+      this.categories[indexCategorie] = {
+        ...categorie,
+        ...payload,
+      };
+      return this.categories[indexCategorie];
+    } else {
+      return null;
+    }
+  }
+
+  delete(id: number) {
+    const categorie = this.findOne(id);
+
+    if (categorie) {
+      const indexCategorie = this.categories.findIndex((c) => c.id === id);
+      this.categories.splice(indexCategorie, 1);
+
+      return { message: true };
+    } else {
+      return { message: false };
+    }
+  }
+}
