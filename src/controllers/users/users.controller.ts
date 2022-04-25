@@ -1,7 +1,6 @@
 import {
   Controller,
   Get,
-  Query,
   Param,
   Post,
   Body,
@@ -9,47 +8,41 @@ import {
   Delete,
 } from '@nestjs/common';
 
+import { ParseIntPipe } from '../../common/parse-int.pipe';
+import { CreateUserDto, UpdateUserDto } from '../../dtos/user.dto';
+import { UsersService } from '../../services/users/users.service';
+
 @Controller('users')
 export class UsersController {
+  constructor(private usersService: UsersService) {}
+
   @Get('')
-  getUsers(@Query('limit') limit = 30, @Query('offset') offset: number) {
-    return {
-      message: `Users: ${limit} - ${offset}`,
-    };
+  getUsers() {
+    return this.usersService.findAll();
   }
 
   @Get(':id')
-  getUser(@Param('id') id: any) {
-    return {
-      message: `User id: ${id}`,
-    };
+  getUser(@Param('id', ParseIntPipe) id: any) {
+    return this.usersService.findOne(id);
   }
 
-  //Create a new user
   @Post()
-  //payload is the information that the user sends through the method POST
-  create(@Body() payload: any) {
-    return {
-      message: 'Accion de crear',
-      payload,
-    };
+  create(@Body() payload: CreateUserDto) {
+    return this.usersService.create(payload);
   }
 
   //Edit a user through your id
   @Put(':id')
   //We will receive new user data through the body.
-  update(@Param('id') id: number, @Body() payload: any) {
-    return {
-      id,
-      payload,
-    };
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() payload: UpdateUserDto,
+  ) {
+    return this.usersService.update(id, payload);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: number) {
-    return {
-      message: 'Accion de eliminar',
-      id,
-    };
+  delete(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.delete(id);
   }
 }
