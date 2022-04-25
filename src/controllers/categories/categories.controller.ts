@@ -2,55 +2,49 @@ import {
   Controller,
   Get,
   Param,
-  Query,
   Post,
   Body,
   Put,
   Delete,
 } from '@nestjs/common';
 
+import { ParseIntPipe } from '../../common/parse-int.pipe';
+import { CategoriesService } from '../../services/categories/categories.service';
+import {
+  CreateCategorieDto,
+  UpdateCategorieDto,
+} from '../../dtos/categorie.dto';
+
 //Any method will have this path (categories), so it is not necessary to put it in the method
 @Controller('categories')
 export class CategoriesController {
+  constructor(private categoriesService: CategoriesService) {}
+
   @Get('')
-  getCategories(@Query('limit') limit = 30, @Query('offset') offset: number) {
-    return {
-      message: `Categories: ${limit} - ${offset}`,
-    };
+  getCategories() {
+    return this.categoriesService.findAll();
   }
 
   @Get(':id')
-  getCategory(@Param('id') id: any) {
-    return {
-      message: `Category id: ${id}`,
-    };
+  getCategory(@Param('id', ParseIntPipe) id: any) {
+    return this.categoriesService.findOne(id);
   }
 
-  //Create a new categorie
   @Post()
-  //payload is the information that the user sends through the method POST
-  create(@Body() payload: any) {
-    return {
-      message: 'Accion de crear',
-      payload,
-    };
+  create(@Body() payload: CreateCategorieDto) {
+    return this.categoriesService.create(payload);
   }
 
-  //Edit a category through your id
   @Put(':id')
-  //We will receive new category data through the body.
-  update(@Param('id') id: number, @Body() payload: any) {
-    return {
-      id,
-      payload,
-    };
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() payload: UpdateCategorieDto,
+  ) {
+    return this.categoriesService.update(id, payload);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: number) {
-    return {
-      message: 'Accion de eliminar',
-      id,
-    };
+  delete(@Param('id', ParseIntPipe) id: number) {
+    return this.categoriesService.delete(id);
   }
 }
