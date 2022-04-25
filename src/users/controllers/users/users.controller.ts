@@ -8,7 +8,7 @@ import {
   Delete,
 } from '@nestjs/common';
 
-import { ParseIntPipe } from '../../common/parse-int.pipe';
+import { ParseIntPipe } from '../../../common/parse-int.pipe';
 import { CreateUserDto, UpdateUserDto } from '../../dtos/user.dto';
 import { UsersService } from '../../services/users/users.service';
 
