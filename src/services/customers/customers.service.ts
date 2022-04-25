@@ -24,8 +24,6 @@ export class CustomersService {
 
     if (!customer) {
       throw new NotFoundException(`customer #${id} not found`);
-    } else {
-      return null;
     }
 
     return customer;
