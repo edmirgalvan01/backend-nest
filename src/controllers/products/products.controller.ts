@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 
 import { ParseIntPipe } from '../../common/parse-int.pipe';
-import { CreateProductDto, UpdateProductDto } from '../../dtos/products.dto';
+import { CreateProductDto, UpdateProductDto } from '../../dtos/product.dto';
 import { ProductsService } from '../../services/products/products.service';
 
 //import { Response } from 'express';
