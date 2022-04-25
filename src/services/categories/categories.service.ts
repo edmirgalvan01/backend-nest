@@ -1,5 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Categorie } from '../../entities/categorie.entity';
+import {
+  CreateCategorieDto,
+  UpdateCategorieDto,
+} from '../../dtos/categorie.dto';
 
 @Injectable()
 export class CategoriesService {
@@ -26,8 +30,7 @@ export class CategoriesService {
     return categorie;
   }
 
-  //TODO: Create brand dto
-  create(payload: any) {
+  create(payload: CreateCategorieDto) {
     this.counterId = this.counterId + 1;
 
     const newCategorie = {
@@ -40,8 +43,7 @@ export class CategoriesService {
     return newCategorie;
   }
 
-  //TODO: Create brand dto
-  update(id: number, payload: any) {
+  update(id: number, payload: UpdateCategorieDto) {
     const categorie = this.findOne(id);
 
     if (categorie) {
